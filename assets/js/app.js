@@ -42,9 +42,17 @@ function visualization(states) {
   chartGroup.append('g').call(leftAxis)
 
   // create plot markers
-  const circlesGroup = chartGroup.selectAll('circle').data(states).enter().append('circle')
-    .attr('cx', d=>linearScaleX(d.poverty)).attr('cy', d=>linearScaleY(d.obesity))
-    .attr('r', '15').attr('fill', '#9AAAD1').attr('opacity', '0.6')
+  let circlesGroup = chartGroup.selectAll('circle').data(states).enter().append('circle')
+    .attr('cx',d=>linearScaleX(d.poverty)).attr('cy',d=>linearScaleY(d.obesity))
+    .attr('r','15').attr('fill','#9AAAD1').attr('opacity','0.85')
+    
+  // add state abbreviations to circles
+  circlesGroup = chartGroup.selectAll().data(states).enter().append('text')
+    .attr('x',d=>linearScaleX(d.poverty)).attr('y',d=>linearScaleY(d.obesity))
+    .style('font-size','17px').style('text-anchor','middle').style('fill','white').text(d=>(d.abbr))
+
+
+
 
 
 
