@@ -22,5 +22,28 @@ d3.csv(dataFile).then(visualization)
 
 // successHandle
 function visualization(states) {
+  
+  // data loop
+  states.map(function (data) {
+    data.poverty = +data.poverty
+    data.obesity = +data.obesity
+  })
+
+  // scale fnxs with min and max
+  const linearScaleX = d3.scaleLinear().domain([8.1, d3.max(states, d => d.poverty)]).range([0, width])
+  const linearScaleY = d3.scaleLinear().domain([20, d3.max(states, d => d.obesity)]).range([height, 0])
+
+  // call scale fnx with axes fnxs
+  const bottomAxis =  d3.axisBottom(linearScaleX)
+  const leftAxis =  d3.axisLeft(linearScaleY)
+
+  // append axes to chartGroup
+  chartGroup.append('g').attr('transform', `translate(o, ${height})`).call(bottomAxis)
+  chartGroup.append('g').call(leftAxis)
+
+  // create plot markers
+  const circlesGroup = chartGroup.selectAll('circle').data(states).enter().append('circle')
+    .attr('cx', d=>linearScaleX(d.poverty)).attr('cy', d=>linearScaleY(d.obesity))
+    .attr('r', '15').attr('fill', '#9AAAD1').attr('opacity', '0.6')
 
 }
