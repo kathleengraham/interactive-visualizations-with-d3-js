@@ -1,10 +1,10 @@
 // canvas and svg width, height, and margins
-const svgWidth = 1100
-const svgHeight = 700
+const svgWidth = 900
+const svgHeight = 450
 const margin = {
-    top: 50,
+    top: 25,
     right: 50,
-    bottom: 90,
+    bottom: 50,
     left: 90
   }
 const width = svgWidth - margin.left - margin.right
@@ -31,7 +31,7 @@ function visualization(states) {
 
   // scale fnxs with min and max (plus a little more space)
   const linearScaleX = d3.scaleLinear().domain([8,d3.max(states,(d,i)=>d.poverty+0.5)]).range([0, width])
-  const linearScaleY = d3.scaleLinear().domain([20,d3.max(states,(d,i)=>d.obesity+2.5)]).range([height, 0])
+  const linearScaleY = d3.scaleLinear().domain([20,d3.max(states,(d,i)=>d.obesity+1)]).range([height, 0])
 
   // call scale fnx with axes fnxs with set tick marks on x axis
   const bottomAxis =  d3.axisBottom(linearScaleX).ticks(10)
