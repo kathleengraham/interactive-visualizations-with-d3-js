@@ -1,10 +1,10 @@
-// canvas and svg width and height
-const svgWidth = 900
-const svgHeight = 600
+// canvas and svg width, height, and margins
+const svgWidth = 1100
+const svgHeight = 700
 const margin = {
-    top: 40,
-    right: 40,
-    bottom: 80,
+    top: 50,
+    right: 50,
+    bottom: 90,
     left: 90
   }
 const width = svgWidth - margin.left - margin.right
@@ -20,7 +20,7 @@ const chartGroup = svg.append('g').attr('transform', `translate(${margin.left}, 
 const dataFile = 'assets/data/data.csv'
 d3.csv(dataFile).then(visualization)
 
-// successHandle
+// plot function
 function visualization(states) {
   
   // data loop
@@ -29,12 +29,12 @@ function visualization(states) {
     data.obesity = +data.obesity
   })
 
-  // scale fnxs with min and max
-  const linearScaleX = d3.scaleLinear().domain([8.1, d3.max(states, d => d.poverty)]).range([0, width])
-  const linearScaleY = d3.scaleLinear().domain([20, d3.max(states, d => d.obesity)]).range([height, 0])
+  // scale fnxs with min and max (plus a little more space)
+  const linearScaleX = d3.scaleLinear().domain([8,d3.max(states,(d,i)=>d.poverty+0.5)]).range([0, width])
+  const linearScaleY = d3.scaleLinear().domain([20,d3.max(states,(d,i)=>d.obesity+2.5)]).range([height, 0])
 
-  // call scale fnx with axes fnxs
-  const bottomAxis =  d3.axisBottom(linearScaleX)
+  // call scale fnx with axes fnxs with set tick marks on x axis
+  const bottomAxis =  d3.axisBottom(linearScaleX).ticks(10)
   const leftAxis =  d3.axisLeft(linearScaleY)
 
   // append axes to chartGroup
@@ -44,12 +44,12 @@ function visualization(states) {
   // create plot markers
   let circlesGroup = chartGroup.selectAll('circle').data(states).enter().append('circle')
     .attr('cx',d=>linearScaleX(d.poverty)).attr('cy',d=>linearScaleY(d.obesity))
-    .attr('r','15').attr('fill','#9AAAD1').attr('opacity','0.85')
+    .attr('r','17').attr('fill','#9AAAD1').attr('opacity','0.85')
     
-  // add state abbreviations to circles
+  // add state abbreviations to circles (centered on both x and y of circle)
   circlesGroup = chartGroup.selectAll().data(states).enter().append('text')
-    .attr('x',d=>linearScaleX(d.poverty)).attr('y',d=>linearScaleY(d.obesity))
-    .style('font-size','17px').style('text-anchor','middle').style('fill','white').text(d=>(d.abbr))
+    .attr('x',d=>linearScaleX(d.poverty)).attr('y',(d,i)=>linearScaleY(d.obesity)+4)
+    .style('font-size','15px').style('text-anchor','middle').style('fill','white').text(d=>(d.abbr))
 
 
 
