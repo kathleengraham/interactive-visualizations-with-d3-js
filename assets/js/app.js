@@ -38,12 +38,14 @@ function visualization(states) {
   const leftAxis =  d3.axisLeft(linearScaleY)
 
   // append axes to chartGroup
-  chartGroup.append('g').attr('transform', `translate(o, ${height})`).call(bottomAxis)
+  chartGroup.append('g').attr('transform', `translate(0, ${height})`).call(bottomAxis)
   chartGroup.append('g').call(leftAxis)
 
   // create plot markers
   const circlesGroup = chartGroup.selectAll('circle').data(states).enter().append('circle')
     .attr('cx', d=>linearScaleX(d.poverty)).attr('cy', d=>linearScaleY(d.obesity))
     .attr('r', '15').attr('fill', '#9AAAD1').attr('opacity', '0.6')
+
+
 
 }
