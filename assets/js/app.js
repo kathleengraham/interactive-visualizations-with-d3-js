@@ -51,9 +51,5 @@ function visualization(states) {
     .attr('x',d=>linearScaleX(d.poverty)).attr('y',(d,i)=>linearScaleY(d.obesity)+4)
     .style('font-size','15px').style('text-anchor','middle').style('fill','white').text(d=>(d.abbr))
 
-
-
-
-
-
+  // more interactive section to be added later
 }
