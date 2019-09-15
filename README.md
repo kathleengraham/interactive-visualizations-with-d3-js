@@ -99,7 +99,7 @@ const svgHeight = 450
 const margin = {
     top: 25,
     right: 50,
-    bottom: 50,
+    bottom: 70,
     left: 90
   }
 const width = svgWidth - margin.left - margin.right
@@ -136,6 +136,12 @@ function visualization(states) {
   chartGroup.append('g').attr('transform', `translate(0, ${height})`).call(bottomAxis)
   chartGroup.append('g').call(leftAxis)
 
+  // label axes
+  chartGroup.append('text').attr('transform','rotate(-90)').attr('x',0-height/2).attr('y',0-margin.left+40)
+    .attr('dy','1em').attr('class','aText').text('Obese (%)')
+
+  chartGroup.append('text').attr('transform',`translate(${width/2},${height+margin.top+20})`).attr('class','aText').text('In Poverty (%)')
+
   // create plot markers
   let circlesGroup = chartGroup.selectAll('circle').data(states).enter().append('circle')
     .attr('cx',d=>linearScaleX(d.poverty)).attr('cy',d=>linearScaleY(d.obesity))
@@ -146,7 +152,16 @@ function visualization(states) {
     .attr('x',d=>linearScaleX(d.poverty)).attr('y',(d,i)=>linearScaleY(d.obesity)+4)
     .style('font-size','15px').style('text-anchor','middle').style('fill','white').text(d=>(d.abbr))
 
-  // more interactive section to be added later
+  // make tooltip
+  const toolTip = d3.tip().attr('class','d3-tip').offset([80,-65])
+    .html(function(d){return(`<strong>${d.state}</strong><br>Poverty: ${d.poverty}%<br>Obesity: ${d.obesity}%`)})
+
+  // add tooltip to chart
+  chartGroup.call(toolTip)
+
+  // tooltip event listeners (show/hide)
+  circlesGroup.on('mouseover',function(data){toolTip.show(data,this)})
+    .on('mouseout',function(data){toolTip.hide(data)})
 }
 ```
 
@@ -191,5 +206,78 @@ footer p {
   margin: 0;
   font-size: 0.9em;
 }
+```
 
+And I styled my D3 Visualization with its own .css file.
+
+```css
+.aText {
+  font-family: sans-serif;
+  font-size: 16px;
+  text-anchor: middle;
+}
+
+.active {
+  font-weight: bold;
+  fill: #000;
+  transition: fill 0.3s ease-out;
+  text-anchor: middle;
+}
+
+.inactive {
+  font-weight: lighter;
+  fill: #c9c9c9;
+  transition: fill 0.3s ease-out;
+  text-anchor: middle;
+}
+
+.inactive:hover {
+  fill: #000;
+  cursor: pointer;
+}
+
+/* font size dependent on radius, see app.js */
+.stateText {
+  font-family: sans-serif;
+  fill: #fff;
+  text-anchor: middle;
+}
+
+.stateCircle {
+  fill: #89bdd3;
+  stroke: #e3e3e3;
+}
+
+.chart {
+  display: block;
+  margin: 0;
+}
+
+.d3-tip {
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1;
+  line-height: 1.5em;
+  color: #fff;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+}
+
+/* Mobile Rules */
+@media screen and (max-width: 530px) {
+  .stateText {
+    display: none;
+  }
+
+  .aText {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .aText {
+    font-size: 13px;
+  }
+}
 ```

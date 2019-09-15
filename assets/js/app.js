@@ -4,7 +4,7 @@ const svgHeight = 450
 const margin = {
     top: 25,
     right: 50,
-    bottom: 50,
+    bottom: 70,
     left: 90
   }
 const width = svgWidth - margin.left - margin.right
@@ -41,6 +41,12 @@ function visualization(states) {
   chartGroup.append('g').attr('transform', `translate(0, ${height})`).call(bottomAxis)
   chartGroup.append('g').call(leftAxis)
 
+  // label axes
+  chartGroup.append('text').attr('transform','rotate(-90)').attr('x',0-height/2).attr('y',0-margin.left+40)
+    .attr('dy','1em').attr('class','aText').text('Obese (%)')
+
+  chartGroup.append('text').attr('transform',`translate(${width/2},${height+margin.top+20})`).attr('class','aText').text('In Poverty (%)')
+
   // create plot markers
   let circlesGroup = chartGroup.selectAll('circle').data(states).enter().append('circle')
     .attr('cx',d=>linearScaleX(d.poverty)).attr('cy',d=>linearScaleY(d.obesity))
@@ -61,6 +67,4 @@ function visualization(states) {
   // tooltip event listeners (show/hide)
   circlesGroup.on('mouseover',function(data){toolTip.show(data,this)})
     .on('mouseout',function(data){toolTip.hide(data)})
-
-  
 }
