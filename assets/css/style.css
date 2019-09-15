@@ -19,18 +19,33 @@
 }
 
 footer {
+  background-color: #9AAAD1;
+  color: white; 
+  font-size: 9pt; 
+  text-align: center; 
+  vertical-align: middle;
+  line-height: 45px;
+  position: fixed;
+  left: 0;
   bottom: 0;
   width: 100%;
-  position: fixed;
-  height: 10px;
-  padding-top: 10px;
-  padding-bottom: 30px;
-  text-align: center;
-  background-color: #9AAAD1;
-  color: white;
+
 }
 
 footer p {
   margin: 0;
   font-size: 0.9em;
+}
+
+#d3-link:link,
+#d3-link:visited,
+#d3-link:hover,
+#d3-link:active {
+  color: white !important;
+}
+
+#gh-icon {
+  width: 30px;
+  height: 30px;
+  background-size: 100%;
 }
