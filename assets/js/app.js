@@ -51,5 +51,16 @@ function visualization(states) {
     .attr('x',d=>linearScaleX(d.poverty)).attr('y',(d,i)=>linearScaleY(d.obesity)+4)
     .style('font-size','15px').style('text-anchor','middle').style('fill','white').text(d=>(d.abbr))
 
-  // more interactive section to be added later
+  // make tooltip
+  const toolTip = d3.tip().attr('class','d3-tip').offset([80,-65])
+    .html(function(d){return(`<strong>${d.state}</strong><br>Poverty: ${d.poverty}%<br>Obesity: ${d.obesity}%`)})
+
+  // add tooltip to chart
+  chartGroup.call(toolTip)
+
+  // tooltip event listeners (show/hide)
+  circlesGroup.on('mouseover',function(data){toolTip.show(data,this)})
+    .on('mouseout',function(data){toolTip.hide(data)})
+
+  
 }
