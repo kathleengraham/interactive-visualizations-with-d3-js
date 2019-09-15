@@ -79,7 +79,12 @@ Next, I moved on to the basic index.html skeleton with navbar to hold my visuali
 
   </div>
 
-  <footer><p>Kathleen Graham &nbsp;&nbsp;&copy;2019</p></footer>
+  <footer>
+    <div class='footer'>
+      Made with 💜 and <a id='d3-link' href='https://d3js.org/' target='_blank' rel='noopener noreferrer'>D3.js</a>&nbsp;&nbsp;|&nbsp;&nbsp;Kathleen Graham 2019&nbsp;&nbsp;
+      <a href='https://github.com/kathleengraham/interactive-visualizations-with-d3-js' target='_blank' rel='noopener noreferrer'><img id='gh-icon' src='icons8-github-64.png'></a>
+    </div>
+  </footer>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js'></script>
@@ -194,20 +199,35 @@ Last, I added styles to give a little bit more personalization.
 }
 
 footer {
+  background-color: #9AAAD1;
+  color: white; 
+  font-size: 9pt; 
+  text-align: center; 
+  vertical-align: middle;
+  line-height: 45px;
+  position: fixed;
+  left: 0;
   bottom: 0;
   width: 100%;
-  position: fixed;
-  height: 10px;
-  padding-top: 10px;
-  padding-bottom: 30px;
-  text-align: center;
-  background-color: #9AAAD1;
-  color: white;
+
 }
 
 footer p {
   margin: 0;
   font-size: 0.9em;
+}
+
+#d3-link:link,
+#d3-link:visited,
+#d3-link:hover,
+#d3-link:active {
+  color: white !important;
+}
+
+#gh-icon {
+  width: 30px;
+  height: 30px;
+  background-size: 100%;
 }
 ```
 
